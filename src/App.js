@@ -1,25 +1,70 @@
-import logo from './logo.svg';
+import React, { useState, useEffect } from 'react';
 import './App.css';
+import clemsonPaw from './assets/clemson-paw.png';
+import Date from './components/Date'
 
-function App() {
+const App = () => {
+  const [showPaw, setShowPaw] = useState(true);
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      setShowPaw(false);
+    }, 2000);
+
+    return () => clearTimeout(timeout);
+  }, []);
+
+  const handleUsernameChange = (event) => {
+    setUsername(event.target.value);
+  };
+
+  const handlePasswordChange = (event) => {
+    setPassword(event.target.value);
+  };
+
+  const handleSignUp = () => {
+    // Add sign up logic here using 'username' and 'password'
+    console.log('Username:', username);
+    console.log('Password:', password);
+  };
+
+  const handleLogin = () => {
+    // Add login logic here using 'username' and 'password'
+    console.log('Username:', username);
+    console.log('Password:', password);
+  };
+
+  //Display the image of the paw and ask for username to login
+  //TODO: Create an option to login as a member or executive member
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="login-container">
+      {showPaw && <img src={clemsonPaw} alt="Clemson Paw" className="clemson-paw" />} 
+      <h2>Login to Clemson Club Tennis</h2>
+      {!showPaw && (
+        <>
+          <form className='button-container'>
+            <label>
+              Username:
+              <input type="text" value={username} onChange={handleUsernameChange} />
+            </label>
+            <label>
+              Password:
+              <input type="password" value={password} onChange={handlePasswordChange} />
+            </label>
+            <button type="button" onClick={handleSignUp} id="signup">
+              Sign Up
+            </button>
+            <button type="button" onClick={handleLogin} id="login">
+              Log In
+            </button>
+          </form>
+        </>
+      )}
+      <Date />
     </div>
   );
-}
+};
 
 export default App;
